@@ -12,27 +12,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.userManagement.dto.UserRequest;
+import com.example.userManagement.dto.UserResponse;
 import com.example.userManagement.entity.User;
 import com.example.userManagement.service.UserService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService = new UserService();
+    private final UserService userService;
 
-    @PostMapping
+    // ✅ Explicit constructor
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/create")
     public User create(@Valid @RequestBody UserRequest request) {
         return userService.create(request);
     }
 
-    @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
+    @GetMapping("/list")
+    public List<UserResponse> getUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
