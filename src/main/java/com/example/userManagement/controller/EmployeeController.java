@@ -1,6 +1,6 @@
 package com.example.userManagement.controller;
 
-public class Employee {
+public class EmployeeController {
 
     public String name;
 }
